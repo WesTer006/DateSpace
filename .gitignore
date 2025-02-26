@@ -1,0 +1,8 @@
+# Visual Studio файлы
+.vs/
+*.user
+*.suo
+
+# Компиляционные файлы .NET
+bin/
+obj/

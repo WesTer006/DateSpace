@@ -1,0 +1,6 @@
+@DateSpaceWebAPI_HostAddress = http://localhost:5039
+
+GET {{DateSpaceWebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
