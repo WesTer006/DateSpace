@@ -3,17 +3,24 @@ using Microsoft.OpenApi.Models;
 
 namespace DateSpaceWebAPI.Extensions
 {
+    /// <summary>
+    /// Клас для налаштування Swagger в додатку.
+    /// </summary>
     public static class SwaggerConfig
     {
+        /// <summary>
+        /// Додає налаштування Swagger до контейнера служб.
+        /// </summary>
+        /// <param name="services">Інстанс контейнера служб</param>
         public static void AddSwaggerConfiguration(this IServiceCollection services)
         {
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "DateSpace API",
+                    Title = "DateSpace WebAPI",
                     Version = "v1",
-                    Description = "API для дейтинг-приложения"
+                    Description = "API для дейтінг-додатка"
                 });
 
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -26,7 +33,7 @@ namespace DateSpaceWebAPI.Extensions
                     Scheme = "Bearer",
                     BearerFormat = "JWT",
                     In = ParameterLocation.Header,
-                    Description = "Введите токен в формате: Bearer {твой_токен}"
+                    Description = "Введіть токен в форматі: Bearer {твій_токен}"
                 });
 
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -46,16 +53,27 @@ namespace DateSpaceWebAPI.Extensions
             });
         }
 
+        /// <summary>
+        /// Налаштовує Swagger для додатку.
+        /// </summary>
+        /// <param name="app">Інстанс веб-додатку</param>
         public static void UseSwaggerConfiguration(this WebApplication app)
         {
-            if (app.Environment.IsDevelopment())
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
             {
-                app.UseSwagger();
-                app.UseSwaggerUI(c =>
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "DateSpace API v1");
+            });
+
+            app.Use(async (context, next) =>
+            {
+                if (context.Request.Path == "/")
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "DateSpace API v1");
-                });
-            }
+                    context.Response.Redirect("/swagger");
+                    return;
+                }
+                await next();
+            });
         }
     }
 }
