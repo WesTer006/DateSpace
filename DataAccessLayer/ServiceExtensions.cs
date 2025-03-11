@@ -14,7 +14,7 @@ namespace DataAccessLayer
 			return services
 				.AddCustomDbContext(configuration.GetConnectionString("SqlServerConnection"));
 		}
-		public static IServiceCollection AddCustomDbContext(this IServiceCollection services, string? connectionString)
+		private static IServiceCollection AddCustomDbContext(this IServiceCollection services, string? connectionString)
 		{
 			return services.AddDbContext<AppDbContext>(options =>
 				options.UseSqlServer(connectionString));
