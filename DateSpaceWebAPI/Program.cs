@@ -8,8 +8,9 @@ builder.Services.AddSwaggerConfiguration();
 
 builder.Services.AddControllers();
 
-builder.Services.AddInfrastructureDependencies(builder.Configuration);
 builder.Services.AddDataAccessDependencies(builder.Configuration);
+builder.Services.AddInfrastructureDependencies(builder.Configuration);
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
