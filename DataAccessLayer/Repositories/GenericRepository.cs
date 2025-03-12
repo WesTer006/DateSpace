@@ -26,6 +26,7 @@ namespace DataAccessLayer.Repositories
             return await _dbSet.ToListAsync();
         }
 
+        // TODO why do we need it?
         public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
         {
             return await _dbSet.Where(predicate).ToListAsync();
