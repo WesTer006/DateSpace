@@ -1,4 +1,6 @@
 ﻿using DataAccessLayer.Data;
+using DataAccessLayer.Interfaces;
+using DataAccessLayer.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,7 +14,8 @@ namespace DataAccessLayer
 	    IConfiguration configuration)
 		{
 			return services
-				.AddCustomDbContext(configuration.GetConnectionString("SqlServerConnection"));
+				.AddCustomDbContext(configuration.GetConnectionString("SqlServerConnection"))
+                .AddScoped<IUnitOfWork, UnitOfWork>();
 		}
 		private static IServiceCollection AddCustomDbContext(this IServiceCollection services, string? connectionString)
 		{
