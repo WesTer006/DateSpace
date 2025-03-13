@@ -1,6 +1,5 @@
 ﻿using DataAccessLayer.Data;
 using DataAccessLayer.Interfaces;
-using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories
 {
@@ -19,7 +18,6 @@ namespace DataAccessLayer.Repositories
             return await _context.SaveChangesAsync();
         }
 
-        // TODO read about Dispose Pattern
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposed)
@@ -37,11 +35,6 @@ namespace DataAccessLayer.Repositories
         {
             Dispose(true);
             GC.SuppressFinalize(this);
-        }
-
-        ~UnitOfWork()
-        {
-            Dispose(false);
         }
     }
 
