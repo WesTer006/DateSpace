@@ -10,7 +10,7 @@ namespace DataAccessLayer.Data
 		{
 			
 		}
-
+		// TODO read about S927
 		protected override void  OnModelCreating(ModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);
