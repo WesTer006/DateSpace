@@ -8,12 +8,12 @@ namespace DataAccessLayer.Entities
 {
 	public class Swipe
 	{
-		public int SwiperId { get; set; }
-		public int TargetId { get; set; }
-		public bool? TargetAgree { get; set; }  // NULL = второй не ответил, 1 = согласился, 0 = отказал
+		public required string SwiperId { get; set; }
+		public required string TargetId { get; set; }
+		public bool? TargetAgree { get; set; }  // NULL = second did not respond, 1 = agreed, 0 = refused
 		public DateTime CreatedAt { get; set; }
 
-		public AppUser Swiper { get; set; }
-		public AppUser Target { get; set; }
+		public required AppUser Swiper { get; set; }
+		public required AppUser Target { get; set; }
 	}
 }

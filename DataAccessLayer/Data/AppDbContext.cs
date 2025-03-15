@@ -5,29 +5,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Data
 {
-	public class AppDbContext:IdentityDbContext<AppUser>
+	public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbContext<AppUser>(options)
 	{
-		public DbSet<Photo> Photos { get; set; }
-		public DbSet<Preference> Preferences { get; set; }
-		public DbSet<Swipe> Swipes { get; set; }
-		public DbSet<Location> Locations { get; set; }
-		public DbSet<Message> Messages { get; set; }
+		public required DbSet<Photo> Photos { get; set; }
+		public required DbSet<Preference> Preferences { get; set; }
+		public required DbSet<Swipe> Swipes { get; set; }
+		public required DbSet<Location> Locations { get; set; }
+		public required DbSet<Message> Messages { get; set; }
 
-		public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-		{
-			
-		}
-		// TODO read about S927
-		protected override void  OnModelCreating(ModelBuilder modelBuilder)
-		{
-			base.OnModelCreating(modelBuilder);
 
-			modelBuilder.ApplyConfiguration(new AppUserConfiguration());
-			modelBuilder.ApplyConfiguration(new PhotoConfiguration());
-			modelBuilder.ApplyConfiguration(new PreferenceConfiguration());
-			modelBuilder.ApplyConfiguration(new SwipeConfiguration());
-			modelBuilder.ApplyConfiguration(new LocationConfiguration());
-			modelBuilder.ApplyConfiguration(new MessageConfiguration());
+		protected override void  OnModelCreating(ModelBuilder builder)
+		{
+			base.OnModelCreating(builder);
+
+			builder.ApplyConfiguration(new AppUserConfiguration());
+			builder.ApplyConfiguration(new PhotoConfiguration());
+			builder.ApplyConfiguration(new PreferenceConfiguration());
+			builder.ApplyConfiguration(new SwipeConfiguration());
+			builder.ApplyConfiguration(new LocationConfiguration());
+			builder.ApplyConfiguration(new MessageConfiguration());
 		}
 	}
 }

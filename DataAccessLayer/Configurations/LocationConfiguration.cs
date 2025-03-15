@@ -10,14 +10,9 @@ namespace DataAccessLayer.Configurations
 		{
 			builder.ToTable("Locations");
 
-			builder.Property(l => l.Latitude)
-				   .IsRequired();
-
-			builder.Property(l => l.Longitude)
-				   .IsRequired();
 
 			builder.Property(l => l.GeoLocation)
-				   .HasColumnType("geography") // SQL Server требует явного указания
+				   .HasColumnType("geography")
 				   .IsRequired();
 
 			builder.Property(l => l.UpdatedAt)

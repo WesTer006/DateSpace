@@ -10,6 +10,8 @@ namespace DataAccessLayer.Configurations
 		{
 			builder.ToTable("Preferences");
 
+			builder.HasKey(p => p.Id);
+
 			builder.Property(p => p.PreferredGender)
 				   .HasMaxLength(10)
 				   .IsRequired()
@@ -27,7 +29,7 @@ namespace DataAccessLayer.Configurations
 			builder.HasOne(p => p.User)
 				   .WithOne(u => u.Preference)
 				   .HasForeignKey<Preference>(p => p.UserId)
-				   .OnDelete(DeleteBehavior.NoAction);
+				   .OnDelete(DeleteBehavior.Cascade);
 		}
 	}
 }

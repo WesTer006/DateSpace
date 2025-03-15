@@ -20,7 +20,7 @@ namespace DataAccessLayer.Configurations
 			builder.HasOne(p => p.User)
 				   .WithMany(u => u.Photos)
 				   .HasForeignKey(p => p.UserId)
-				   .OnDelete(DeleteBehavior.NoAction);
+				   .OnDelete(DeleteBehavior.Cascade);
 		}
 	}
 }

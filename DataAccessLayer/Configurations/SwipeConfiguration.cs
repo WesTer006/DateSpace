@@ -1,7 +1,6 @@
 ﻿using DataAccessLayer.Entities;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DataAccessLayer.Configurations
 {
@@ -12,7 +11,7 @@ namespace DataAccessLayer.Configurations
 			builder.ToTable("Swipes");
 
 			builder.Property(s => s.TargetAgree)
-				   .HasDefaultValue(null); // NULL означает, что второй пользователь не ответил
+				   .HasDefaultValue(null);
 
 			builder.Property(s => s.CreatedAt)
 				   .HasDefaultValueSql("CURRENT_TIMESTAMP");
@@ -20,14 +19,14 @@ namespace DataAccessLayer.Configurations
 			builder.HasKey(s => new { s.SwiperId, s.TargetId });
 
 			builder.HasOne(s => s.Swiper)
-				   .WithMany(u => u.Swipes)
+				   .WithMany(u => u.SwipesAsSwiper)
 				   .HasForeignKey(s => s.SwiperId)
-				   .OnDelete(DeleteBehavior.NoAction);
+				   .OnDelete(DeleteBehavior.Cascade);
 
 			builder.HasOne(s => s.Target)
-				   .WithMany(u => u.Swipes)
-				   .HasForeignKey(s => s.TargetId)
-				   .OnDelete(DeleteBehavior.NoAction);
+			       .WithMany(u => u.SwipesAsTarget)
+			       .HasForeignKey(s => s.TargetId)
+			       .OnDelete(DeleteBehavior.NoAction);
 		}
 	}
 }
