@@ -1,6 +1,6 @@
 ﻿using NetTopologySuite.Geometries;
 
-namespace BusinessLogicLayer.DTOs
+namespace DateSpaceWebAPI.DTOs
 {
     public class LocationDTO
     {

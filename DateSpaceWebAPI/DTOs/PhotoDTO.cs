@@ -1,6 +1,6 @@
-﻿namespace BusinessLayer.Models
+﻿namespace DateSpaceWebAPI.DTOs
 {
-    public class PhotoModel
+    public class PhotoDTO
     {
         public int Id { get; set; }
         public string Url { get; set; } = string.Empty;

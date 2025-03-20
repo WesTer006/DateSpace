@@ -1,10 +1,9 @@
-﻿namespace BusinessLayer.Models
+﻿namespace DateSpaceWebAPI.DTOs
 {
-    public class SwipeModel
+    public class SwipeDTO
     {
         public int SwiperId { get; set; }
         public int TargetId { get; set; }
         public bool? TargetAgree { get; set; }
-        public DateTime CreatedAt { get; set; }
     }
 }

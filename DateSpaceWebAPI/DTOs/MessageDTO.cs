@@ -1,4 +1,4 @@
-﻿namespace BusinessLogicLayer.DTOs
+﻿namespace DateSpaceWebAPI.DTOs
 {
     public class MessageDTO
     {
