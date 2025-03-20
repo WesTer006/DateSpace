@@ -2,7 +2,7 @@
 
 namespace DateSpaceWebAPI.DTOs
 {
-    public class LocationDTO
+    public class LocationDto
     {
         public Point? GeoLocation { get; set; }
     }

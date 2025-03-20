@@ -1,9 +1,10 @@
 ﻿namespace DateSpaceWebAPI.DTOs
 {
-    public class SwipeDTO
+    public class SwipeDto
     {
-        public int SwiperId { get; set; }
-        public int TargetId { get; set; }
+        public string SwiperId { get; set; } = string.Empty;
+        public string TargetId { get; set; } = string.Empty;
         public bool? TargetAgree { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

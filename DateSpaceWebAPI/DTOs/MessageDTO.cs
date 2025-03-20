@@ -1,10 +1,9 @@
 ﻿namespace DateSpaceWebAPI.DTOs
 {
-    public class MessageDTO
+    public class MessageDto
     {
-        public int Id { get; set; }
-        public int SenderId { get; set; }
-        public int ReceiverId { get; set; }
+        public string SenderId { get; set; } = string.Empty;
+        public string ReceiverId { get; set; } = string.Empty;
         public string MessageText { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
     }
