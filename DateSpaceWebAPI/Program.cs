@@ -9,7 +9,7 @@ builder.Services.AddSwaggerConfiguration();
 builder.Services.AddControllers();
 
 builder.Services.AddDataAccessDependencies(builder.Configuration);
-builder.Services.AddInfrastructureDependencies(builder.Configuration);
+builder.Services.AddAuthenticationServices(builder.Configuration);
 builder.Services.AddAutoMapperConfiguration();
 
 var app = builder.Build();
