@@ -1,20 +1,15 @@
 ﻿using BusinessLogicLayer.Interfaces;
 using DataAccessLayer.Entities;
-using DataAccessLayer.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.Services
 {
-	internal class TokenService:ITokenService
+	public class TokenService:ITokenService
 	{
 		private readonly IConfiguration _configuration;
 
@@ -33,11 +28,11 @@ namespace BusinessLogicLayer.Services
 		};
 
 			var authSigningKey = new SymmetricSecurityKey(
-				Encoding.UTF8.GetBytes(_configuration["Jwt:Secret"]));
+				Encoding.UTF8.GetBytes(_configuration["JwtOptions:SecretKey"]));
 
 			var token = new JwtSecurityToken(
-				issuer: _configuration["Jwt:Issuer"],
-				audience: _configuration["Jwt:Audience"],
+				issuer: _configuration["JwtOptions:Issuer"],
+				audience: _configuration["JwtOptions:Audience"],
 				expires: DateTime.UtcNow.AddMinutes(15),
 				claims: authClaims,
 				signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256));
@@ -58,10 +53,10 @@ namespace BusinessLogicLayer.Services
 				ValidateAudience = true,
 				ValidateLifetime = false,
 				ValidateIssuerSigningKey = true,
-				ValidIssuer = _configuration["Jwt:Issuer"],
-				ValidAudience = _configuration["Jwt:Audience"],
+				ValidIssuer = _configuration["JwtOptions:Issuer"],
+				ValidAudience = _configuration["JwtOptions:Audience"],
 				IssuerSigningKey = new SymmetricSecurityKey(
-					Encoding.UTF8.GetBytes(_configuration["Jwt:Secret"]))
+					Encoding.UTF8.GetBytes(_configuration["JwtOptions:SecretKey"]))
 			};
 
 			var tokenHandler = new JwtSecurityTokenHandler();

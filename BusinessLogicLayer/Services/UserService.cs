@@ -2,15 +2,11 @@
 using DataAccessLayer.Entities;
 using DataAccessLayer.Interfaces;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace BusinessLogicLayer.Services
 {
-	internal class UserService : IUserService
+	public class UserService : IUserService
 	{
 		private readonly IUserRepository _userRepository;
 
@@ -21,7 +17,7 @@ namespace BusinessLogicLayer.Services
 
 		public async Task<AppUser?> AuthenticateUserAsync(string username, string password)
 		{
-			var user = await _userRepository.FindByEmailAsync(username);
+			var user = await _userRepository.FindByNameAsync(username);
 			if (user != null && await _userRepository.CheckPasswordAsync(user, password))
 			{
 				return user;
@@ -29,19 +25,23 @@ namespace BusinessLogicLayer.Services
 			return null;
 		}
 
-		public async Task UpdateUserTokensAsync(AppUser user, string refreshToken, DateTime expiryTime)
+		public async Task UpdateUserTokensAsync(AppUser user, string? refreshToken, DateTime? expiryTime)
 		{
 			user.RefreshToken = refreshToken;
 			user.RefreshTokenExpiryTime = expiryTime;
 			await _userRepository.UpdateUserAsync(user);
 		}
-		public async Task<AppUser?> GetUserByEmailAsync(string username)
+		public async Task<AppUser?> GetUserByNameAsync(string username)
 		{
-			return await _userRepository.FindByEmailAsync(username);
+			return await _userRepository.FindByNameAsync(username);
 		}
-		public async Task<IdentityResult> RegisterUserAsync(AppUser user)
+		public async Task<IdentityResult> RegisterUserAsync(AppUser user, string password)
 		{
-			return await _userRepository.CreateUserAsync(user);
+			return await _userRepository.CreateUserAsync(user,password);
+		}
+		public async Task<AppUser?> GetUserByRefreshTokenAsync(string refreshToken)
+		{
+			return await _userRepository.GetUserByRefreshTokenAsync(refreshToken);
 		}
 	}
 }

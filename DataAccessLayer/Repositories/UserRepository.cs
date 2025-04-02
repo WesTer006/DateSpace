@@ -1,11 +1,8 @@
 ﻿using DataAccessLayer.Entities;
 using DataAccessLayer.Interfaces;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace DataAccessLayer.Repositories
 {
@@ -18,9 +15,9 @@ namespace DataAccessLayer.Repositories
 			_userManager = userManager;
 		}
 
-		public async Task<AppUser?> FindByEmailAsync(string username)
+		public async Task<AppUser?> FindByNameAsync(string username)
 		{
-			return await _userManager.FindByEmailAsync(username);
+			return await _userManager.FindByNameAsync(username);
 		}
 
 		public async Task<bool> CheckPasswordAsync(AppUser user, string password)
@@ -32,9 +29,14 @@ namespace DataAccessLayer.Repositories
 		{
 			await _userManager.UpdateAsync(user);
 		}
-		public async Task<IdentityResult> CreateUserAsync(AppUser user)
+		public async Task<IdentityResult> CreateUserAsync(AppUser user, string password)
 		{
+			user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, password);
 			return await _userManager.CreateAsync(user);
+		}
+		public async Task<AppUser?> GetUserByRefreshTokenAsync(string refreshToken)
+		{
+			return await _userManager.Users.FirstOrDefaultAsync(u => u.RefreshToken == refreshToken);
 		}
 	}
 }

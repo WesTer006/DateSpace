@@ -24,7 +24,7 @@ namespace DataAccessLayer.Configurations
 	               .IsRequired(false); 
 
 			builder.Property(u => u.RefreshTokenExpiryTime)
-				   .IsRequired();  
+				   .IsRequired(false);  
 
 			builder.HasMany(u => u.Photos)
 				   .WithOne()

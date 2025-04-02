@@ -17,7 +17,7 @@ namespace DataAccessLayer.Entities
 		public ICollection<Message>? ReceivedMessages { get; set; }
 		public Location? Location { get; set; }
 
-		public string RefreshToken { get; set; } = string.Empty;
-		public DateTime RefreshTokenExpiryTime { get; set; }
+		public string? RefreshToken { get; set; } = string.Empty;
+		public DateTime? RefreshTokenExpiryTime { get; set; }
 	}
 }

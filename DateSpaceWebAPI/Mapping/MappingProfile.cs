@@ -14,8 +14,7 @@ namespace DateSpaceWebAPI.Mapping
 		        .ForMember(dest => dest.Bio, opt => opt.MapFrom(src => src.Bio))
 		        .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt))
 		        .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
-				.ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
-				 .ForMember(dest => dest.PasswordHash, opt => opt.MapFrom(src => src.Password));
+				.ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName));
 
 			CreateMap<Location, LocationDto>()
                 .ForMember(dest => dest.GeoLocation, opt => opt.MapFrom(src => src.GeoLocation))

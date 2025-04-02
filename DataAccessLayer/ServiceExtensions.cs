@@ -16,7 +16,7 @@ namespace DataAccessLayer
 				.AddCustomDbContext(
 				configuration.GetConnectionString("SqlServerConnection"))
                 .AddScoped<IUnitOfWork, UnitOfWork>()
-				 .AddScoped<IUserRepository, UserRepository>(); ;
+				 .AddScoped<IUserRepository, UserRepository>();
 		}
 		private static IServiceCollection AddCustomDbContext(this IServiceCollection services, string? connectionString)
 		{
