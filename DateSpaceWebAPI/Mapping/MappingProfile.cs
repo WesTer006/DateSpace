@@ -8,7 +8,7 @@ namespace DateSpaceWebAPI.Mapping
     {
         public MappingProfile()
         {
-		    CreateMap<UserDTO, AppUser>()
+		    CreateMap<UserDto, AppUser>(MemberList.None)
 		        .ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.Age))
 		        .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Gender))
 		        .ForMember(dest => dest.Bio, opt => opt.MapFrom(src => src.Bio))

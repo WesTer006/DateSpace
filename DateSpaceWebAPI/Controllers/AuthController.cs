@@ -57,7 +57,7 @@ namespace DateSpaceWebAPI.Controllers
 		}
 
 		[HttpPost("register")]
-		public async Task<IActionResult> Register([FromBody] UserDTO userDto)
+		public async Task<IActionResult> Register([FromBody] UserDto userDto)
 		{
 			var user = _mapper.Map<AppUser>(userDto);
 			var result = await _userService.RegisterUserAsync(user, userDto.Password);
@@ -90,15 +90,20 @@ namespace DateSpaceWebAPI.Controllers
 		}
 
 		[HttpPost("refresh")]
-		public async Task<IActionResult> RefreshToken()
+		public async Task<IActionResult> RefreshToken([FromHeader(Name = "Authorization")] string authHeader)
 		{
-			if (!Request.Headers.TryGetValue("Authorization", out var authHeader) ||
-				!authHeader.ToString().StartsWith("Bearer "))
+			if (string.IsNullOrEmpty(authHeader))
 			{
-				return Unauthorized(new { message = "Authorization header missing or invalid" });
+				return Unauthorized(new { message = "Authorization header missing" });
 			}
 
-			var refreshToken = authHeader.ToString().Substring("Bearer ".Length).Trim();
+			if (!authHeader.StartsWith("Bearer ", StringComparison.InvariantCultureIgnoreCase))
+			{
+				return Unauthorized(new { message = "Authorization header must start with 'Bearer '" });
+			}
+
+			var refreshToken = authHeader.Substring("Bearer ".Length).Trim();
+
 			if (string.IsNullOrEmpty(refreshToken))
 			{
 				return Unauthorized(new { message = "Refresh token missing" });
@@ -119,20 +124,27 @@ namespace DateSpaceWebAPI.Controllers
 				SameSite = SameSiteMode.Strict,
 				Expires = DateTime.UtcNow.AddMinutes(15)
 			});
-			return Ok(new { accessToken = newJwtToken });
+
+			return Ok(new { AccessToken = newJwtToken });
 		}
 
 
+
 		[HttpPost("logout")]
-		public async Task<IActionResult> Logout()
+		public async Task<IActionResult> Logout([FromHeader(Name = "Authorization")] string authHeader)
 		{
-			if (!Request.Headers.TryGetValue("Authorization", out var authHeader) ||
-				!authHeader.ToString().Trim().StartsWith("Bearer "))
+			if (string.IsNullOrEmpty(authHeader))
 			{
-				return Unauthorized(new { message = "Authorization header missing or invalid" });
+				return Unauthorized(new { message = "Authorization header missing" });
 			}
 
-			var refreshToken = authHeader.ToString().Substring("Bearer ".Length).Trim();
+			if (!authHeader.StartsWith("Bearer ", StringComparison.InvariantCultureIgnoreCase))
+			{
+				return Unauthorized(new { message = "Authorization header must start with 'Bearer '" });
+			}
+
+			var refreshToken = authHeader.Substring("Bearer ".Length).Trim();
+
 			if (string.IsNullOrEmpty(refreshToken))
 			{
 				return Unauthorized(new { message = "Refresh token missing" });
@@ -146,6 +158,7 @@ namespace DateSpaceWebAPI.Controllers
 
 			await _userService.UpdateUserTokensAsync(user, null, null);
 
+			// Remove the cookies for both JWT and refresh token on logout
 			Response.Cookies.Delete("jwt");
 			Response.Cookies.Delete("refresh");
 
