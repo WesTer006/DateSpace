@@ -19,6 +19,13 @@ namespace DataAccessLayer.Configurations
 			builder.Property(u => u.Bio).HasColumnType("NVARCHAR(MAX)");
 			builder.Property(u => u.CreatedAt).HasDefaultValueSql("GETDATE()");
 
+			builder.Property(u => u.RefreshToken)
+	               .HasMaxLength(150)  
+	               .IsRequired(false); 
+
+			builder.Property(u => u.RefreshTokenExpiryTime)
+				   .IsRequired(false);  
+
 			builder.HasMany(u => u.Photos)
 				   .WithOne()
 				   .HasForeignKey(p => p.UserId)
