@@ -25,7 +25,7 @@ namespace DateSpaceWebAPI.Controllers
 		}
 
 		[HttpPost("login")]
-		public async Task<IActionResult> Login([FromBody] LoginModel model)
+		public async Task<IActionResult> Login([FromBody] LoginDto model)
 		{
 			var authenticatedUser = await _userService.AuthenticateUserAsync(model.UserName, model.Password);
 			if (authenticatedUser == null)
