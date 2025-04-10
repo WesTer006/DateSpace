@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-
 
 namespace DataAccessLayer.Entities
 {
@@ -18,5 +16,8 @@ namespace DataAccessLayer.Entities
 		public ICollection<Message>? SentMessages { get; set; }
 		public ICollection<Message>? ReceivedMessages { get; set; }
 		public Location? Location { get; set; }
+
+		public string? RefreshToken { get; set; } = string.Empty;
+		public DateTime? RefreshTokenExpiryTime { get; set; }
 	}
 }
