@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using DateSpaceWebAPI.Mapping;
 using DataAccessLayer.Entities;
-using DateSpaceWebAPI.DTOs;
+using Shared.DTOs;
 using NetTopologySuite.Geometries;
 
 namespace DateSpaceWebAPI.Tests
