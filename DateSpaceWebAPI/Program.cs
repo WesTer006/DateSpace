@@ -2,17 +2,21 @@ using BusinessLogicLayer;
 using DataAccessLayer;
 using DateSpaceWebAPI.Extensions;
 using Microsoft.AspNetCore.CookiePolicy;
+using Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSwaggerConfiguration();
-
-builder.Services.AddControllers();
 
 builder.Services.AddDataAccessDependencies(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
-builder.Services.AddAutoMapperConfiguration();
 builder.Services.AddJwtAuthentication(builder.Configuration);
+
+builder.Services.AddControllers();
+
+builder.Services.AddFluentValidation();
+builder.Services.AddAutoMapperConfiguration();
+
+builder.Services.AddSwaggerConfiguration();
 
 
 builder.Services.AddCors(options =>

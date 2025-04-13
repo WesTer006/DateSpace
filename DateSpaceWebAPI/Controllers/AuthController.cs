@@ -59,6 +59,8 @@ namespace DateSpaceWebAPI.Controllers
 		[HttpPost("register")]
 		public async Task<IActionResult> Register([FromBody] UserDto userDto)
 		{
+
+
 			var user = _mapper.Map<AppUser>(userDto);
 			var result = await _userService.RegisterUserAsync(user, userDto.Password);
 			if (!result.Succeeded)
