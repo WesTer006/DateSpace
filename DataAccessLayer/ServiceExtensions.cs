@@ -12,15 +12,27 @@ namespace DataAccessLayer
 	public static class ServiceExtensions
 	{
 		public static IServiceCollection AddDataAccessDependencies(this IServiceCollection services,
-	    IConfiguration configuration)
+	    IConfiguration configuration, bool useLocal)
 		{
-			var connectionString = GetConnectionStringFromAzureKeyVault(configuration);
+			string connectionString;
+
+			if (useLocal)
+			{
+				connectionString = configuration.GetConnectionString("SqlServerConnection");
+				Console.WriteLine("Using local database connection string.");
+			}
+			else
+			{
+				connectionString = GetConnectionStringFromAzureKeyVault(configuration);
+				Console.WriteLine("Using Azure Key Vault connection string.");
+			}
 
 			return services
 				.AddCustomDbContext(connectionString)
                 .AddScoped<IUnitOfWork, UnitOfWork>()
 				.AddScoped<IUserRepository, UserRepository>();
 		}
+	
 		private static IServiceCollection AddCustomDbContext(this IServiceCollection services, string? connectionString)
 		{
 			return services.AddDbContext<AppDbContext>(options =>
