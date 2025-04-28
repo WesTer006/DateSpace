@@ -4,7 +4,6 @@ using DataAccessLayer.Entities;
 using Shared.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
-
 namespace DateSpaceWebAPI.Controllers
 {
 	[Route("api/auth")]
@@ -128,8 +127,6 @@ namespace DateSpaceWebAPI.Controllers
 			return Ok(new { AccessToken = newJwtToken });
 		}
 
-
-
 		[HttpPost("logout")]
 		public async Task<IActionResult> Logout([FromHeader(Name = "Authorization")] string authHeader)
 		{
@@ -158,7 +155,6 @@ namespace DateSpaceWebAPI.Controllers
 
 			await _userService.UpdateUserTokensAsync(user, null, null);
 
-			// Remove the cookies for both JWT and refresh token on logout
 			Response.Cookies.Delete("jwt");
 			Response.Cookies.Delete("refresh");
 

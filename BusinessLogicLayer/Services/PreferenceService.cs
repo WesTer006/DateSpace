@@ -19,10 +19,8 @@ namespace BusinessLogicLayer.Services
 
         public async Task<PreferenceDto?> GetPreferencesAsync(string userId)
         {
-            // Получаем репозиторий для Preference с помощью дженерика
             var preferencesRepo = _unitOfWork.GetRepository<Preference>();
 
-            // Ищем предпочтения по userId
             var prefs = await preferencesRepo.FindAsync(p => p.UserId == userId);
             var pref = prefs.FirstOrDefault();
 
@@ -34,7 +32,6 @@ namespace BusinessLogicLayer.Services
             var entity = _mapper.Map<Preference>(preferenceDto);
             entity.UserId = userId;
 
-            // Получаем репозиторий для Preference с помощью дженерика и добавляем новую сущность
             var preferencesRepo = _unitOfWork.GetRepository<Preference>();
             await preferencesRepo.AddAsync(entity);
             await _unitOfWork.SaveChangesAsync();
@@ -44,7 +41,6 @@ namespace BusinessLogicLayer.Services
 
         public async Task<PreferenceDto> UpdatePreferencesAsync(string userId, PreferenceDto preferenceDto)
         {
-            // Получаем репозиторий для Preference с помощью дженерика
             var preferencesRepo = _unitOfWork.GetRepository<Preference>();
 
             var prefs = await preferencesRepo.FindAsync(p => p.UserId == userId);
@@ -53,9 +49,8 @@ namespace BusinessLogicLayer.Services
             if (entity == null)
                 throw new InvalidOperationException("Preferences not found for this user.");
 
-            // Обновляем значения
             _mapper.Map(preferenceDto, entity);
-            entity.UserId = userId; // Подстраховка, если в dto не передаётся
+            entity.UserId = userId;
 
             preferencesRepo.Update(entity);
             await _unitOfWork.SaveChangesAsync();
@@ -65,7 +60,6 @@ namespace BusinessLogicLayer.Services
 
         public async Task<bool> DeletePreferencesAsync(string userId)
         {
-            // Получаем репозиторий для Preference с помощью дженерика
             var preferencesRepo = _unitOfWork.GetRepository<Preference>();
 
             var prefs = await preferencesRepo.FindAsync(p => p.UserId == userId);

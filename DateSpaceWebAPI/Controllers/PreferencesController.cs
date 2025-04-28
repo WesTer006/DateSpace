@@ -18,44 +18,53 @@ namespace DateSpaceWebAPI.Controllers
             _preferenceService = preferenceService;
         }
 
-        [HttpGet("{userId}")]
+        [HttpGet]
         [ProducesResponseType(typeof(PreferenceDto), 200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<PreferenceDto>> GetPreferences(string userId)
+        public async Task<ActionResult<PreferenceDto>> GetPreferences()
         {
-            if (userId != User.FindFirstValue(ClaimTypes.NameIdentifier))
-                return Forbid();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+                return Unauthorized();
 
             var preferences = await _preferenceService.GetPreferencesAsync(userId);
             return preferences == null ? NotFound() : Ok(preferences);
         }
 
-        [HttpPost("{userId}")]
+        [HttpPost]
         [ProducesResponseType(typeof(PreferenceDto), 201)]
-        public async Task<ActionResult<PreferenceDto>> AddPreferences(
-            string userId,
-            [FromBody] PreferenceDto preferenceDto)
+        public async Task<ActionResult<PreferenceDto>> AddPreferences([FromBody] PreferenceDto preferenceDto)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+                return Unauthorized();
+
             var preferences = await _preferenceService.AddPreferencesAsync(userId, preferenceDto);
-            return CreatedAtAction(nameof(GetPreferences), new { userId }, preferences);
+            return CreatedAtAction(nameof(GetPreferences), null, preferences);
         }
 
-        [HttpPut("{userId}")]
+        [HttpPut]
         [ProducesResponseType(typeof(PreferenceDto), 200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<PreferenceDto>> UpdatePreferences(
-            string userId,
-            [FromBody] PreferenceDto preferenceDto)
+        public async Task<ActionResult<PreferenceDto>> UpdatePreferences([FromBody] PreferenceDto preferenceDto)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+                return Unauthorized();
+
             var preferences = await _preferenceService.UpdatePreferencesAsync(userId, preferenceDto);
             return Ok(preferences);
         }
 
-        [HttpDelete("{userId}")]
+        [HttpDelete]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> DeletePreferences(string userId)
+        public async Task<IActionResult> DeletePreferences()
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+                return Unauthorized();
+
             await _preferenceService.DeletePreferencesAsync(userId);
             return NoContent();
         }

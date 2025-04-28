@@ -103,7 +103,6 @@ namespace DateSpaceWebAPI.Tests
 
             var dto = _mapper.Map<PreferenceDto>(preference);
 
-            Assert.Equal(preference.UserId, dto.UserId);
             Assert.Equal(preference.PreferredGender, dto.PreferredGender);
             Assert.Equal(preference.MinAge, dto.MinAge);
             Assert.Equal(preference.MaxAge, dto.MaxAge);
