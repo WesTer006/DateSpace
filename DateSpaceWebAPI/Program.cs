@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.CookiePolicy;
 
 var builder = WebApplication.CreateBuilder(args);
 
-bool useLocalDb = args.Contains("UseLocalD", StringComparer.OrdinalIgnoreCase);
+bool useLocalDb = args.Contains("UseLocalDb", StringComparer.OrdinalIgnoreCase);
 
 builder.Services.AddSwaggerConfiguration();
 

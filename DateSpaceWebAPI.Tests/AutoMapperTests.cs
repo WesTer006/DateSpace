@@ -103,11 +103,13 @@ namespace DateSpaceWebAPI.Tests
 
             var dto = _mapper.Map<PreferenceDto>(preference);
 
+            Assert.Equal(preference.UserId, dto.UserId);
             Assert.Equal(preference.PreferredGender, dto.PreferredGender);
             Assert.Equal(preference.MinAge, dto.MinAge);
             Assert.Equal(preference.MaxAge, dto.MaxAge);
             Assert.Equal(preference.MaxDistance, dto.MaxDistance);
         }
+
 
         [Fact]
         public void Should_Map_Swipe_To_SwipeDto()
