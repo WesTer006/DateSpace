@@ -5,14 +5,11 @@ using Microsoft.AspNetCore.CookiePolicy;
 
 var builder = WebApplication.CreateBuilder(args);
 
-bool useLocalDb = args.Contains("UseLocalD", StringComparer.OrdinalIgnoreCase);
-
 builder.Services.AddSwaggerConfiguration();
 
 builder.Services.AddControllers();
 
-builder.Services.AddDataAccessDependencies(builder.Configuration, useLocalDb);
-
+builder.Services.AddDataAccessDependencies(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddAutoMapperConfiguration();
 builder.Services.AddJwtAuthentication(builder.Configuration);

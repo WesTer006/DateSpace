@@ -10,6 +10,3 @@ obj/
 
 # Файлы миграций
 Migrations/
-
-# HTTP-запросы (например, для тестов API в Visual Studio или Rider)
-*.http
