@@ -11,5 +11,6 @@ namespace DataAccessLayer.Interfaces
 		Task UpdateUserAsync(AppUser user);
 		Task<IdentityResult> CreateUserAsync(AppUser user, string password);
 		Task<AppUser?> GetUserByRefreshTokenAsync(string refreshToken);
+		Task<AppUser?> FindByIdAsync(string id);
 	}
 }

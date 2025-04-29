@@ -38,5 +38,10 @@ namespace DataAccessLayer.Repositories
 		{
 			return await _userManager.Users.FirstOrDefaultAsync(u => u.RefreshToken == refreshToken);
 		}
+		public async Task<AppUser?> FindByIdAsync(string id)
+		{
+			return await _userManager.FindByIdAsync(id);
+		}
+
 	}
 }

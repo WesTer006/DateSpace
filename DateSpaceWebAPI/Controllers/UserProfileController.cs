@@ -1,8 +1,10 @@
 ﻿using BusinessLogicLayer.Interfaces;
 using BusinessLogicLayer.Services;
+using DateSpaceWebAPI.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace DateSpaceWebAPI.Controllers
 {
@@ -44,5 +46,22 @@ namespace DateSpaceWebAPI.Controllers
 				
 			});
 		}
+
+		[HttpPut("me")]
+		public async Task<IActionResult> UpdateMyProfile([FromBody] UserDto user)
+		{
+			var userId = User.FindFirst(ClaimTypes.NameIdentifier);
+
+			var updated = await _userService.UpdateProfileAsync(userId.Value,user.UserName, user.Age, user.Gender, user.Bio);
+
+			if (!updated)
+			{
+				return NotFound(new { message = "User not found" });
+			}
+
+			return Ok(new { message = "Profile updated successfully" });
+		}
+
+
 	}
 }

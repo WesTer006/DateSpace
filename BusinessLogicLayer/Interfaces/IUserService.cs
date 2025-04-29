@@ -10,5 +10,7 @@ namespace BusinessLogicLayer.Interfaces
 		Task<AppUser?> GetUserByNameAsync(string username);
 		Task<IdentityResult> RegisterUserAsync(AppUser user, string password);
 		Task<AppUser?> GetUserByRefreshTokenAsync(string refreshToken);
+		Task<bool> UpdateProfileAsync(string userId, string username, int? age, string? gender, string? bio);
+		Task<AppUser?> GetUserByIdAsync(string id);
 	}
 }
