@@ -8,7 +8,6 @@ namespace DateSpaceWebAPI.Extensions
 {
 	public static class AuthenticationExtensions
 	{
-
 		public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
 		{
 			var jwtSettings = configuration.GetSection("JwtOptions");
@@ -17,7 +16,7 @@ namespace DateSpaceWebAPI.Extensions
 			{
 				options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
 				options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-				options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme; // Убираем куки
+				options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 			})
 				.AddJwtBearer(JwtBearerDefaults.AuthenticationScheme,options =>
 				{

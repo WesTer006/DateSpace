@@ -1,4 +1,4 @@
-﻿namespace DateSpaceWebAPI.DTOs
+﻿namespace Shared.DTOs
 {
     public class PreferenceDto
     {

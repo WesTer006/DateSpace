@@ -3,7 +3,6 @@ using DataAccessLayer.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace DataAccessLayer.Repositories
 {
 	internal class UserRepository:IUserRepository

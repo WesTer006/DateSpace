@@ -45,7 +45,6 @@ namespace DataAccessLayer
 			if (string.IsNullOrEmpty(secretUrl))
 				throw new InvalidOperationException("SecretSqlServerConnection URL is missing from configuration.");
 
-
 			var uri = new Uri(secretUrl);
 			var vaultBaseUrl = $"{uri.Scheme}://{uri.Host}";
 			var segments = uri.Segments;
@@ -54,7 +53,6 @@ namespace DataAccessLayer
 
 			var secretName = segments[2].TrimEnd('/');
 
-			
 			var client = new SecretClient(new Uri(vaultBaseUrl), new DefaultAzureCredential());
 			var secret = client.GetSecret(secretName);
 

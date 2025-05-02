@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using DateSpaceWebAPI.Mapping;
 using DataAccessLayer.Entities;
-using DateSpaceWebAPI.DTOs;
+using Shared.DTOs;
 using NetTopologySuite.Geometries;
 
 namespace DateSpaceWebAPI.Tests
@@ -108,6 +108,7 @@ namespace DateSpaceWebAPI.Tests
             Assert.Equal(preference.MaxAge, dto.MaxAge);
             Assert.Equal(preference.MaxDistance, dto.MaxDistance);
         }
+
 
         [Fact]
         public void Should_Map_Swipe_To_SwipeDto()

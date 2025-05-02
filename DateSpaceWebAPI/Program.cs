@@ -1,55 +1,12 @@
-using BusinessLogicLayer;
-using DataAccessLayer;
-using DateSpaceWebAPI.Extensions;
-using Microsoft.AspNetCore.CookiePolicy;
+﻿using DateSpaceWebAPI.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-bool useLocalDb = args.Contains("UseLocalD", StringComparer.OrdinalIgnoreCase);
-
-builder.Services.AddSwaggerConfiguration();
-
-builder.Services.AddControllers();
-
-builder.Services.AddDataAccessDependencies(builder.Configuration, useLocalDb);
-
-builder.Services.AddIdentityServices(builder.Configuration);
-builder.Services.AddAutoMapperConfiguration();
-builder.Services.AddJwtAuthentication(builder.Configuration);
-
-
-builder.Services.AddCors(options =>
-{
-	options.AddPolicy("AllowAll", policy =>
-	{
-		policy.AllowAnyOrigin()
-			  .AllowAnyHeader()
-			  .AllowAnyMethod();
-	});
-});
+builder.Services.AddApplicationDependencies(builder.Configuration);
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwaggerConfiguration();
-}
-
-app.UseHttpsRedirection();
-
-app.UseCookiePolicy(new CookiePolicyOptions
-{
-	MinimumSameSitePolicy = SameSiteMode.Strict,
-	HttpOnly = HttpOnlyPolicy.Always,
-	Secure = CookieSecurePolicy.Always
-});
-
-
-app.UseCors("AllowAll");
-
-app.UseAuthentication();
-app.UseAuthorization();
-
+app.UseApplicationMiddlewares();
 
 app.MapControllers();
 
