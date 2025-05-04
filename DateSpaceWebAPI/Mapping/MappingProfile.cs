@@ -47,8 +47,11 @@ namespace DateSpaceWebAPI.Mapping
                 .ForMember(dest => dest.MaxDistance, opt => opt.MapFrom(src => src.MaxDistance))
                 .ReverseMap()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
-                .ForMember(dest => dest.UserId, opt => opt.Ignore())
-                .ForMember(dest => dest.User, opt => opt.Ignore());
+                .ForMember(dest => dest.User, opt => opt.Ignore())
+                .ForMember(dest => dest.PreferredGender, opt => opt.MapFrom(src => src.PreferredGender))
+                .ForMember(dest => dest.MinAge, opt => opt.MapFrom(src => src.MinAge))
+                .ForMember(dest => dest.MaxAge, opt => opt.MapFrom(src => src.MaxAge))
+                .ForMember(dest => dest.MaxDistance, opt => opt.MapFrom(src => src.MaxDistance));
 
             CreateMap<Swipe, SwipeDto>()
                 .ForMember(dest => dest.SwiperId, opt => opt.MapFrom(src => src.SwiperId))

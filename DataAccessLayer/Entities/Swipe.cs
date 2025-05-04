@@ -4,7 +4,7 @@
 	{
 		public required string SwiperId { get; set; }
 		public required string TargetId { get; set; }
-		public bool? TargetAgree { get; set; }  // NULL = second did not respond, 1 = agreed, 0 = refused
+		public bool? TargetAgree { get; set; }
 		public DateTime CreatedAt { get; set; }
 
 		public required AppUser Swiper { get; set; }

@@ -1,7 +1,6 @@
 ﻿using DataAccessLayer.Entities;
 using Microsoft.AspNetCore.Identity;
 
-
 namespace DataAccessLayer.Interfaces
 {
 	public interface IUserRepository

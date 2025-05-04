@@ -109,6 +109,7 @@ namespace Shared.Tests
             Assert.Equal(preference.MaxDistance, dto.MaxDistance);
         }
 
+
         [Fact]
         public void Should_Map_Swipe_To_SwipeDto()
         {

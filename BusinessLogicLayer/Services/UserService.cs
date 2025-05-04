@@ -3,7 +3,6 @@ using DataAccessLayer.Entities;
 using DataAccessLayer.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
-
 namespace BusinessLogicLayer.Services
 {
 	public class UserService : IUserService
