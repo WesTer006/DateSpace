@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using DataAccessLayer.Entities;
-using DateSpaceWebAPI.DTOs;
+using Shared.DTOs;
 
 namespace DateSpaceWebAPI.Mapping
 {

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BusinessLogicLayer.Interfaces;
 using DataAccessLayer.Entities;
-using DateSpaceWebAPI.DTOs;
+using Shared.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 

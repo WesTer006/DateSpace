@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace Shared.Validators
 {
-	public class UserDtoValidator : AbstractValidator<UserDto>
+	public class UserProfileDtoValidator : AbstractValidator<UserProfileDto>
 	{
-		public UserDtoValidator()
+		public UserProfileDtoValidator()
 		{
 			RuleFor(x => x.UserName)
 				.NotEmpty().WithMessage("Username is required.")
@@ -23,12 +23,6 @@ namespace Shared.Validators
 			RuleFor(x => x.Email)
 				.NotEmpty().WithMessage("Email is required.")
 				.EmailAddress().WithMessage("Invalid email format.");
-
-			RuleFor(x => x.Password)
-				.NotEmpty().WithMessage("Password is required.")
-				.MinimumLength(6).WithMessage("Password must be at least 6 characters long.")
-				.Matches(@"\d").WithMessage("Password must contain at least one digit.");
-
 
 			RuleFor(x => x.Bio)
 				.MaximumLength(500).WithMessage("Bio can't be longer than 500 characters.");

@@ -42,6 +42,10 @@ namespace DataAccessLayer.Repositories
 		{
 			return await _userManager.FindByIdAsync(id);
 		}
+		public async Task<IdentityResult> ChangePasswordAsync(AppUser user, string oldPassword, string newPassword)
+		{
+			return await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+		}
 
 	}
 }

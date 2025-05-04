@@ -1,5 +1,4 @@
-﻿using DateSpaceWebAPI.DTOs;
-using FluentValidation;
+﻿using FluentValidation;
 using Shared.Validators;
 using Microsoft.Extensions.DependencyInjection;
 using FluentValidation.AspNetCore;
