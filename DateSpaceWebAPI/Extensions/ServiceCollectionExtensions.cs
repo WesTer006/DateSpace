@@ -3,6 +3,7 @@ using BusinessLogicLayer.Interfaces;
 using BusinessLogicLayer.Services;
 using DataAccessLayer;
 using Microsoft.AspNetCore.CookiePolicy;
+using Shared;
 
 namespace DateSpaceWebAPI.Extensions
 {
@@ -14,7 +15,8 @@ namespace DateSpaceWebAPI.Extensions
 
             services.AddSwaggerConfiguration();
             services.AddControllers();
-            services.AddDataAccessDependencies(configuration, useLocalDb);
+			services.AddFluentValidation();
+			services.AddDataAccessDependencies(configuration, useLocalDb);
             services.AddIdentityServices(configuration);
             services.AddAutoMapperConfiguration();
             services.AddJwtAuthentication(configuration);
