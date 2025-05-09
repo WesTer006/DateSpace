@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using DateSpaceWebAPI.Mapping;
+using Shared.Mapping;
 using DataAccessLayer.Entities;
 using Shared.DTOs;
 using NetTopologySuite.Geometries;
 
-namespace DateSpaceWebAPI.Tests
+namespace Shared.Tests
 {
     public class MappingTests
     {

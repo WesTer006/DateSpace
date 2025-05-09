@@ -37,5 +37,14 @@ namespace DataAccessLayer.Repositories
 		{
 			return await _userManager.Users.FirstOrDefaultAsync(u => u.RefreshToken == refreshToken);
 		}
+		public async Task<AppUser?> FindByIdAsync(string id)
+		{
+			return await _userManager.FindByIdAsync(id);
+		}
+		public async Task<IdentityResult> ChangePasswordAsync(AppUser user, string oldPassword, string newPassword)
+		{
+			return await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+		}
+
 	}
 }

@@ -42,5 +42,39 @@ namespace BusinessLogicLayer.Services
 		{
 			return await _userRepository.GetUserByRefreshTokenAsync(refreshToken);
 		}
+
+		public async Task<bool> UpdateProfileAsync(string userId, string? username, int? age, string? gender, string? bio, string? email)
+		{
+			var user = await _userRepository.FindByIdAsync(userId);
+			if (user == null)
+				return false;
+
+			if (!string.IsNullOrEmpty(username))
+				user.UserName = username;
+			if (age.HasValue)
+				user.Age = age.Value;
+			if (!string.IsNullOrEmpty(gender))
+				user.Gender = gender;
+			if (!string.IsNullOrEmpty(bio))
+				user.Bio = bio;
+			if (!string.IsNullOrEmpty(email))
+				user.Email = email;
+
+			await _userRepository.UpdateUserAsync(user);
+			return true;
+		}
+		public async Task<AppUser?> GetUserByIdAsync(string id)
+		{
+			return await _userRepository.FindByIdAsync(id);
+		}
+		public async Task<bool> ChangePasswordAsync(string userId, string oldPassword, string newPassword)
+		{
+			var user = await _userRepository.FindByIdAsync(userId);
+			if (user == null)
+				return false;
+
+			var result = await _userRepository.ChangePasswordAsync(user, oldPassword, newPassword);
+			return result.Succeeded;
+		}
 	}
 }
