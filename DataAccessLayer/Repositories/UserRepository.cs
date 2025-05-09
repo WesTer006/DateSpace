@@ -9,7 +9,7 @@ namespace DataAccessLayer.Repositories
 	{
 		private readonly UserManager<AppUser> _userManager;
 
-		public UserRepository(UserManager<AppUser> userManager)
+        public UserRepository(UserManager<AppUser> userManager)
 		{
 			_userManager = userManager;
 		}
@@ -46,5 +46,11 @@ namespace DataAccessLayer.Repositories
 			return await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
 		}
 
-	}
+        public async Task<List<AppUser>> GetRecommendationsAsync(string userId)
+        {
+            return await _userManager.Users
+                .Where(u => u.Id != userId)
+                .ToListAsync();
+        }
+    }
 }

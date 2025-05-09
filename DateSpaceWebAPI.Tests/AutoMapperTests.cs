@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Shared.Mapping;
 using DataAccessLayer.Entities;
 using Shared.DTOs;
 using NetTopologySuite.Geometries;
+using DateSpaceWebAPI.Mapping;
 
 namespace Shared.Tests
 {

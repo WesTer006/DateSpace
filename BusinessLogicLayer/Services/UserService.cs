@@ -30,6 +30,7 @@ namespace BusinessLogicLayer.Services
 			user.RefreshTokenExpiryTime = expiryTime;
 			await _userRepository.UpdateUserAsync(user);
 		}
+
 		public async Task<AppUser?> GetUserByNameAsync(string username)
 		{
 			return await _userRepository.FindByNameAsync(username);
@@ -38,6 +39,7 @@ namespace BusinessLogicLayer.Services
 		{
 			return await _userRepository.CreateUserAsync(user,password);
 		}
+
 		public async Task<AppUser?> GetUserByRefreshTokenAsync(string refreshToken)
 		{
 			return await _userRepository.GetUserByRefreshTokenAsync(refreshToken);
@@ -63,10 +65,12 @@ namespace BusinessLogicLayer.Services
 			await _userRepository.UpdateUserAsync(user);
 			return true;
 		}
+
 		public async Task<AppUser?> GetUserByIdAsync(string id)
 		{
 			return await _userRepository.FindByIdAsync(id);
 		}
+
 		public async Task<bool> ChangePasswordAsync(string userId, string oldPassword, string newPassword)
 		{
 			var user = await _userRepository.FindByIdAsync(userId);
@@ -76,5 +80,25 @@ namespace BusinessLogicLayer.Services
 			var result = await _userRepository.ChangePasswordAsync(user, oldPassword, newPassword);
 			return result.Succeeded;
 		}
-	}
+
+        public async Task<List<AppUser>> GetRecommendationsAsync(string userId)
+        {
+            var currentUser = await _userRepository.FindByIdAsync(userId);
+            if (currentUser == null || currentUser.Preference == null)
+                return new List<AppUser>();
+
+            var allUsers = await _userRepository.GetRecommendationsAsync(userId);
+
+            var prefs = currentUser.Preference;
+
+            var filteredUsers = allUsers.Where(u =>
+                u.Age >= prefs.MinAge &&
+                u.Age <= prefs.MaxAge &&
+                u.Gender == prefs.PreferredGender
+            // TODO: Добавить фильтрацию по Location
+            ).ToList();
+
+            return filteredUsers;
+        }
+    }
 }

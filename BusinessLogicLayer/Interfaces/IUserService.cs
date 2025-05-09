@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer.Entities;
 using Microsoft.AspNetCore.Identity;
+using Shared.DTOs;
 
 namespace BusinessLogicLayer.Interfaces
 {
@@ -13,5 +14,6 @@ namespace BusinessLogicLayer.Interfaces
 		Task<bool> UpdateProfileAsync(string userId, string username, int? age, string? gender, string? bio, string? email);
 		Task<AppUser?> GetUserByIdAsync(string id);
 		Task<bool> ChangePasswordAsync(string userId, string oldPassword, string newPassword);
-	}
+        Task<List<AppUser>> GetRecommendationsAsync(string userId);
+    }
 }
