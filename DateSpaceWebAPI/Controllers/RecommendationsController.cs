@@ -23,13 +23,13 @@ namespace DateSpaceWebAPI.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(List<UserDto>), 200)]
-        public async Task<ActionResult<List<UserDto>>> Get()
+        public async Task<ActionResult<List<UserDto>>> Get([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId == null)
                 return Unauthorized();
 
-            var recommendations = await _userService.GetRecommendationsAsync(userId);
+            var recommendations = await _userService.GetRecommendationsAsync(userId, page, pageSize);
             var result = _mapper.Map<List<UserDto>>(recommendations);
 
             return Ok(result);

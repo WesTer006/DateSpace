@@ -12,6 +12,6 @@ namespace DataAccessLayer.Interfaces
 		Task<AppUser?> GetUserByRefreshTokenAsync(string refreshToken);
 		Task<AppUser?> FindByIdAsync(string id);
 		Task<IdentityResult> ChangePasswordAsync(AppUser user, string oldPassword, string newPassword);
-        Task<List<AppUser>> GetRecommendationsAsync(string userId);
+        Task<List<AppUser>> GetRecommendationsAsync(string userId, int page = 1, int pageSize = 10);
     }
 }

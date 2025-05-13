@@ -14,6 +14,6 @@ namespace BusinessLogicLayer.Interfaces
 		Task<bool> UpdateProfileAsync(string userId, string username, int? age, string? gender, string? bio, string? email);
 		Task<AppUser?> GetUserByIdAsync(string id);
 		Task<bool> ChangePasswordAsync(string userId, string oldPassword, string newPassword);
-        Task<List<AppUser>> GetRecommendationsAsync(string userId);
+        Task<List<UserDto>> GetRecommendationsAsync(string userId, int page = 1, int pageSize = 10);
     }
 }

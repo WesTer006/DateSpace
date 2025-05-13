@@ -27,6 +27,37 @@ namespace Shared.Tests
         }
 
         [Fact]
+        public void Should_Map_AppUser_To_UserDto()
+        {
+            // Arrange
+            var appUser = new AppUser
+            {
+                UserName = "testuser",
+                Age = 25,
+                Gender = "Male",
+                Bio = "Just a cool guy",
+                Email = "testuser@example.com",
+                Id = "user1",
+                Preference = null,
+                Location = null,
+                Photos = [],
+                RefreshToken = null,
+                RefreshTokenExpiryTime = null
+            };
+
+            // Act
+            var dto = _mapper.Map<UserDto>(appUser);
+
+            // Assert
+            Assert.Equal(appUser.UserName, dto.UserName);
+            Assert.Equal(appUser.Age, dto.Age);
+            Assert.Equal(appUser.Gender, dto.Gender);
+            Assert.Equal(appUser.Bio, dto.Bio);
+            Assert.Equal(appUser.Email, dto.Email);
+            Assert.Null(dto.Password);
+        }
+
+        [Fact]
         public void Should_Map_Location_To_LocationDto()
         {
             var point = new Point(10.5, 20.5);
