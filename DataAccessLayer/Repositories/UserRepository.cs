@@ -45,15 +45,5 @@ namespace DataAccessLayer.Repositories
 		{
 			return await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
 		}
-
-        public async Task<List<AppUser>> GetRecommendationsAsync(string userId, int page = 1, int pageSize = 10)
-        {
-            return await _userManager.Users
-                .Include(u => u.Preference)
-                .Where(u => u.Id != userId)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
-        }
     }
 }

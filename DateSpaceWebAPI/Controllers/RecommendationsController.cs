@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTOs;
 using System.Security.Claims;
-using AutoMapper;
 
 namespace DateSpaceWebAPI.Controllers
 {
@@ -12,13 +11,11 @@ namespace DateSpaceWebAPI.Controllers
     [Authorize]
     public class RecommendationsController : ControllerBase
     {
-        private readonly IUserService _userService;
-        private readonly IMapper _mapper;
+        private readonly IRecommendationService _recommendationService;
 
-        public RecommendationsController(IUserService userService, IMapper mapper)
+        public RecommendationsController(IRecommendationService recommendationService)
         {
-            _userService = userService;
-            _mapper = mapper;
+            _recommendationService = recommendationService;
         }
 
         [HttpGet]
@@ -29,10 +26,8 @@ namespace DateSpaceWebAPI.Controllers
             if (userId == null)
                 return Unauthorized();
 
-            var recommendations = await _userService.GetRecommendationsAsync(userId, page, pageSize);
-            var result = _mapper.Map<List<UserDto>>(recommendations);
-
-            return Ok(result);
+            var recommendations = await _recommendationService.GetRecommendationsAsync(userId, page, pageSize);
+            return Ok(recommendations);
         }
     }
 }
