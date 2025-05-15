@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using BusinessLogicLayer.Interfaces;
+﻿using BusinessLogicLayer.Interfaces;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -10,7 +9,7 @@ namespace BusinessLogicLayer.Services
 	{
         private readonly IUserRepository _userRepository;
 
-        public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public UserService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }

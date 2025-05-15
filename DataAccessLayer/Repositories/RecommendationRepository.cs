@@ -17,14 +17,13 @@ namespace DataAccessLayer.Repositories
         public async Task<List<AppUser>> GetRecommendationsAsync(string userId, Preference? preference, int page, int pageSize)
         {
             var query = _context.Users
-                .AsNoTracking() // Отключаем отслеживание для оптимизации
-                .Where(u => u.Id != userId) // Исключаем текущего пользователя
+                .AsNoTracking()
+                .Where(u => u.Id != userId)
                 .Where(u => !_context.Swipes.Any(s =>
                     (s.SwiperId == userId && s.TargetId == u.Id) ||
                     (s.TargetId == userId && s.SwiperId == u.Id)
-                )); // Исключаем просвайпанных
+                ));
 
-            // Фильтрация по предпочтениям
             if (preference != null)
             {
                 query = query
@@ -33,9 +32,8 @@ namespace DataAccessLayer.Repositories
                 // TODO: MaxDistance (заглушка, фильтр добавим позже)
             }
 
-            // Пагинация
             query = query
-                .OrderBy(u => u.UserName) // Для детерминированного порядка
+                .OrderBy(u => u.UserName)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize);
 

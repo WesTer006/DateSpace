@@ -24,12 +24,10 @@ namespace BusinessLogicLayer.Services
             if (page < 1 || pageSize <= 0)
                 return new List<UserDto>();
 
-            // Получаем предпочтения текущего пользователя
             var preferenceRepo = _unitOfWork.GetRepository<Preference>();
             var preferences = await preferenceRepo.FindAsync(p => p.UserId == userId);
             var preference = preferences.FirstOrDefault();
 
-            // Получаем пользователей с фильтрацией и пагинацией в БД
             var filteredUsers = await _recommendationRepository.GetRecommendationsAsync(userId, preference, page, pageSize);
 
             return _mapper.Map<List<UserDto>>(filteredUsers);
