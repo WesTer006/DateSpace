@@ -54,14 +54,13 @@ namespace DateSpaceWebAPI.Controllers
 			if (string.IsNullOrEmpty(userId))
 				return Unauthorized(new { message = "Unauthorized" });
 
-			// Обработка и валидация значений, переданных в UserProfileDto
 			var updated = await _userService.UpdateProfileAsync(
 				userId,
 				user.UserName,
 				user.Age,
 				user.Gender,
 				user.Bio,
-				user.Email);  // Теперь Email тоже передается, если необходимо
+				user.Email);
 
 			if (!updated)
 				return NotFound(new { message = "User not found" });

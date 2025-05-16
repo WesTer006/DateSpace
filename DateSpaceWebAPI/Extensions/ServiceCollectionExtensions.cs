@@ -32,8 +32,9 @@ namespace DateSpaceWebAPI.Extensions
             });
 
             services.AddScoped<IPreferenceService, PreferenceService>();
+			services.AddScoped<ISwipeService, SwipeService>();
 
-            return services;
+			return services;
         }
 
         public static WebApplication UseApplicationMiddlewares(this WebApplication app)
