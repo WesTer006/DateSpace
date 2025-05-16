@@ -19,8 +19,8 @@ namespace DateSpaceWebAPI.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(List<UserDto>), 200)]
-        public async Task<ActionResult<List<UserDto>>> Get([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        [ProducesResponseType(typeof(List<PublicUserDto>), 200)]
+        public async Task<ActionResult<List<PublicUserDto>>> Get([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId == null)

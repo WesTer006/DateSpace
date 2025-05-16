@@ -19,10 +19,10 @@ namespace BusinessLogicLayer.Services
             _mapper = mapper;
         }
 
-        public async Task<List<UserDto>> GetRecommendationsAsync(string userId, int page = 1, int pageSize = 10)
+        public async Task<List<PublicUserDto>> GetRecommendationsAsync(string userId, int page = 1, int pageSize = 10)
         {
             if (page < 1 || pageSize <= 0)
-                return new List<UserDto>();
+                return new List<PublicUserDto>();
 
             var preferenceRepo = _unitOfWork.GetRepository<Preference>();
             var preferences = await preferenceRepo.FindAsync(p => p.UserId == userId);
@@ -30,7 +30,7 @@ namespace BusinessLogicLayer.Services
 
             var filteredUsers = await _recommendationRepository.GetRecommendationsAsync(userId, preference, page, pageSize);
 
-            return _mapper.Map<List<UserDto>>(filteredUsers);
+            return _mapper.Map<List<PublicUserDto>>(filteredUsers);
         }
     }
 }

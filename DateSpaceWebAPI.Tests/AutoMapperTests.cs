@@ -21,6 +21,35 @@ namespace Shared.Tests
         }
 
         [Fact]
+        public void Should_Map_AppUser_To_PublicUserDto()
+        {
+            // Arrange
+            var appUser = new AppUser
+            {
+                UserName = "masha",
+                Age = 19,
+                Gender = "Female",
+                Bio = "biobiobio",
+                Email = "masha@gmail.com",
+                Id = "user123",
+                Preference = null,
+                Location = null,
+                Photos = [],
+                RefreshToken = null,
+                RefreshTokenExpiryTime = null
+            };
+
+            // Act
+            var dto = _mapper.Map<PublicUserDto>(appUser);
+
+            // Assert
+            Assert.Equal(appUser.UserName, dto.UserName);
+            Assert.Equal(appUser.Age, dto.Age);
+            Assert.Equal(appUser.Gender, dto.Gender);
+            Assert.Equal(appUser.Bio, dto.Bio);
+        }
+
+        [Fact]
         public void MappingConfiguration_IsValid()
         {
             Assert.True(true);

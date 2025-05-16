@@ -4,6 +4,6 @@ namespace BusinessLogicLayer.Interfaces
 {
     public interface IRecommendationService
     {
-        Task<List<UserDto>> GetRecommendationsAsync(string userId, int page = 1, int pageSize = 10);
+        Task<List<PublicUserDto>> GetRecommendationsAsync(string userId, int page = 1, int pageSize = 10);
     }
 }
