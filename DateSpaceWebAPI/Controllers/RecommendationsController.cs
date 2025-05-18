@@ -12,10 +12,14 @@ namespace DateSpaceWebAPI.Controllers
     public class RecommendationsController : ControllerBase
     {
         private readonly IRecommendationService _recommendationService;
+        private readonly IPreferenceService _preferenceService;
+		private readonly ILocationService _locationService;
 
-        public RecommendationsController(IRecommendationService recommendationService)
+		public RecommendationsController(IRecommendationService recommendationService, IPreferenceService preferenceService, ILocationService locationService)
         {
             _recommendationService = recommendationService;
+            _preferenceService = preferenceService;
+            _locationService = locationService;
         }
 
         [HttpGet]
@@ -26,7 +30,17 @@ namespace DateSpaceWebAPI.Controllers
             if (userId == null)
                 return Unauthorized();
 
-            var recommendations = await _recommendationService.GetRecommendationsAsync(userId, page, pageSize);
+			var preferences = await _preferenceService.GetPreferencesAsync(userId);
+			
+			if (preferences == null)
+                return NotFound("Preferences required");
+
+            var location = await _locationService.GetLocationAsync(userId);
+
+			if (location == null)
+				return NotFound("Location required");
+
+			var recommendations = await _recommendationService.GetRecommendationsAsync(userId,preferences, page, pageSize);
             return Ok(recommendations);
         }
     }

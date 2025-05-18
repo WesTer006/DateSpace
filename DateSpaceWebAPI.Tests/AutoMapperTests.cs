@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using DataAccessLayer.Entities;
-using Shared.DTOs;
-using NetTopologySuite.Geometries;
 using DateSpaceWebAPI.Mapping;
+using NetTopologySuite;
+using NetTopologySuite.Geometries;
+using Shared.DTOs;
 
 namespace Shared.Tests
 {
@@ -86,27 +87,51 @@ namespace Shared.Tests
             Assert.Null(dto.Password);
         }
 
-        [Fact]
-        public void Should_Map_Location_To_LocationDto()
-        {
-            var point = new Point(10.5, 20.5);
-            var location = new DataAccessLayer.Entities.Location
-            {
-                Id = 1,
-                UserId = "user1",
-                GeoLocation = point,
-                UpdatedAt = DateTime.UtcNow,
-                User = null!
-            };
+		[Fact]
+		public void Should_Map_Location_To_LocationDto()
+		{
+			// Arrange
+			var geometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326);
+			var point = geometryFactory.CreatePoint(new Coordinate( 10.5,  20.5));
 
-            var dto = _mapper.Map<LocationDto>(location);
+			var location = new DataAccessLayer.Entities.Location
+			{
+				Id = 1,
+				UserId = "user1",
+				GeoLocation = point,
+				UpdatedAt = DateTime.UtcNow,
+				User = null!
+			};
 
-            Assert.NotNull(dto.GeoLocation);
-            Assert.Equal(point.X, dto.GeoLocation!.X);
-            Assert.Equal(point.Y, dto.GeoLocation!.Y);
-        }
+			// Act
+			var dto = _mapper.Map<LocationDto>(location);
 
-        [Fact]
+			// Assert
+			Assert.Equal(20.5, dto.Latitude);  // Y = latitude
+			Assert.Equal(10.5, dto.Longitude); // X = longitude
+		}
+
+		[Fact]
+		public void Should_Map_LocationDto_To_Location()
+		{
+			// Arrange
+			var dto = new LocationDto
+			{
+				Latitude = 20.5,
+				Longitude = 10.5,
+			};
+
+			// Act
+			var location = _mapper.Map<DataAccessLayer.Entities.Location>(dto);
+
+			// Assert
+			Assert.Equal(10.5, location.GeoLocation.X);    // longitude
+			Assert.Equal(20.5, location.GeoLocation.Y);    // latitude
+			Assert.Equal(4326, location.GeoLocation.SRID); // Проверяем SRID
+		}
+
+
+		[Fact]
         public void Should_Map_Message_To_MessageDto()
         {
             var now = DateTime.UtcNow;

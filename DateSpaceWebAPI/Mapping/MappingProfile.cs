@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DataAccessLayer.Entities;
+using NetTopologySuite.Geometries;
 using Shared.DTOs;
 
 namespace DateSpaceWebAPI.Mapping
@@ -12,7 +13,8 @@ namespace DateSpaceWebAPI.Mapping
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
                 .ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.Age))
                 .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Gender))
-                .ForMember(dest => dest.Bio, opt => opt.MapFrom(src => src.Bio));
+                .ForMember(dest => dest.Bio, opt => opt.MapFrom(src => src.Bio))
+				.ForMember(dest => dest.DistanceKm, opt => opt.Ignore());
 
             CreateMap<AppUser, UserDto>()
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
@@ -30,14 +32,18 @@ namespace DateSpaceWebAPI.Mapping
 				.ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
 				.ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName));
 
-			CreateMap<Location, LocationDto>()
-                .ForMember(dest => dest.GeoLocation, opt => opt.MapFrom(src => src.GeoLocation))
-                .ReverseMap()
-                .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore())
-                .ForMember(dest => dest.UserId, opt => opt.Ignore())
-                .ForMember(dest => dest.User, opt => opt.Ignore());
+			CreateMap<DataAccessLayer.Entities.Location, LocationDto>()
+				.ForMember(dest => dest.Latitude, opt => opt.MapFrom(src => src.GeoLocation.Y))
+				.ForMember(dest => dest.Longitude, opt => opt.MapFrom(src => src.GeoLocation.X))
+				.ReverseMap()
+				.ForMember(dest => dest.GeoLocation,
+					opt => opt.MapFrom(src => new Point(src.Longitude, src.Latitude) { SRID = 4326 }))
+				.ForMember(dest => dest.UpdatedAt, opt => opt.Ignore())
+				.ForMember(dest => dest.UserId, opt => opt.Ignore())
+				.ForMember(dest => dest.User, opt => opt.Ignore());
 
-            CreateMap<Message, MessageDto>()
+
+			CreateMap<Message, MessageDto>()
                 .ForMember(dest => dest.SenderId, opt => opt.MapFrom(src => src.SenderId))
                 .ForMember(dest => dest.ReceiverId, opt => opt.MapFrom(src => src.ReceiverId))
                 .ForMember(dest => dest.MessageText, opt => opt.MapFrom(src => src.MessageText))
