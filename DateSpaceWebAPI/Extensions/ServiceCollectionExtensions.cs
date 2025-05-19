@@ -32,6 +32,8 @@ namespace DateSpaceWebAPI.Extensions
             });
 
             services.AddScoped<IPreferenceService, PreferenceService>();
+            services.AddScoped<IRecommendationService, RecommendationService>();
+            services.AddScoped<ILocationService, LocationService>();
 
             return services;
         }
