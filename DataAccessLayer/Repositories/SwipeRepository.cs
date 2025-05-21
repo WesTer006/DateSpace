@@ -14,7 +14,7 @@ namespace DataAccessLayer.Repositories
 		public async Task<Swipe?> GetReverseSwipeAsync(string swiperId, string targetId)
 		{
 			return await _dbSet.FirstOrDefaultAsync(s =>
-				s.SwiperId == swiperId && s.TargetId == targetId);
+				s.SwiperId == targetId && s.TargetId == swiperId);
 		}
 
 		public async Task<Swipe> CreateSwipeAsync(AppUser swiper, AppUser target)
@@ -36,7 +36,7 @@ namespace DataAccessLayer.Repositories
 		public async Task SetTargetAgreeAsync(string swiperId, string targetId)
 		{
 			var swipe = await _dbSet.FirstOrDefaultAsync(s =>
-				s.SwiperId == swiperId && s.TargetId == targetId);
+				s.SwiperId == targetId && s.TargetId == swiperId);
 
 			if (swipe != null)
 			{
