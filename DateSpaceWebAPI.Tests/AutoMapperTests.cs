@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using DataAccessLayer.Entities;
-using Shared.DTOs;
+using DateSpaceWebAPI.Mapping;
+using NetTopologySuite;
 using NetTopologySuite.Geometries;
 using DateSpaceWebAPI.Mapping;
+using Shared.DTOs;
 
 namespace Shared.Tests
 {
@@ -21,32 +23,116 @@ namespace Shared.Tests
         }
 
         [Fact]
+        public void Should_Map_AppUser_To_PublicUserDto()
+        {
+            // Arrange
+            var appUser = new AppUser
+            {
+                UserName = "masha",
+                Age = 19,
+                Gender = "Female",
+                Bio = "biobiobio",
+                Email = "masha@gmail.com",
+                Id = "user123",
+                Preference = null,
+                Location = null,
+                Photos = [],
+                RefreshToken = null,
+                RefreshTokenExpiryTime = null
+            };
+
+            // Act
+            var dto = _mapper.Map<PublicUserDto>(appUser);
+
+            // Assert
+            Assert.Equal(appUser.UserName, dto.UserName);
+            Assert.Equal(appUser.Age, dto.Age);
+            Assert.Equal(appUser.Gender, dto.Gender);
+            Assert.Equal(appUser.Bio, dto.Bio);
+        }
+
+        [Fact]
         public void MappingConfiguration_IsValid()
         {
             Assert.True(true);
         }
 
         [Fact]
-        public void Should_Map_Location_To_LocationDto()
+        public void Should_Map_AppUser_To_UserDto()
         {
-            var point = new Point(10.5, 20.5);
-            var location = new DataAccessLayer.Entities.Location
+            // Arrange
+            var appUser = new AppUser
             {
-                Id = 1,
-                UserId = "user1",
-                GeoLocation = point,
-                UpdatedAt = DateTime.UtcNow,
-                User = null!
+                UserName = "testuser",
+                Age = 25,
+                Gender = "Male",
+                Bio = "Just a cool guy",
+                Email = "testuser@example.com",
+                Id = "user1",
+                Preference = null,
+                Location = null,
+                Photos = [],
+                RefreshToken = null,
+                RefreshTokenExpiryTime = null
             };
 
-            var dto = _mapper.Map<LocationDto>(location);
+            // Act
+            var dto = _mapper.Map<UserDto>(appUser);
 
-            Assert.NotNull(dto.GeoLocation);
-            Assert.Equal(point.X, dto.GeoLocation!.X);
-            Assert.Equal(point.Y, dto.GeoLocation!.Y);
+            // Assert
+            Assert.Equal(appUser.UserName, dto.UserName);
+            Assert.Equal(appUser.Age, dto.Age);
+            Assert.Equal(appUser.Gender, dto.Gender);
+            Assert.Equal(appUser.Bio, dto.Bio);
+            Assert.Equal(appUser.Email, dto.Email);
+            Assert.Null(dto.Password);
         }
 
-        [Fact]
+		[Fact]
+		public void Should_Map_Location_To_LocationDto()
+		{
+			// Arrange
+			var geometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326);
+			var point = geometryFactory.CreatePoint(new Coordinate( 10.5,  20.5));
+
+			var location = new DataAccessLayer.Entities.Location
+			{
+				Id = 1,
+				UserId = "user1",
+				GeoLocation = point,
+				UpdatedAt = DateTime.UtcNow,
+				User = null!
+			};
+
+			// Act
+			var dto = _mapper.Map<LocationDto>(location);
+
+			// Assert
+			Assert.Equal(20.5, dto.Latitude);  // Y = latitude
+			Assert.Equal(10.5, dto.Longitude); // X = longitude
+		}
+
+		[Fact]
+		public void Should_Map_LocationDto_To_Location()
+		{
+			// Arrange
+			var dto = new LocationDto
+			{
+				Latitude = 20.5,
+				Longitude = 10.5,
+			};
+
+			// Act
+			var location = _mapper.Map<DataAccessLayer.Entities.Location>(dto);
+
+			// Assert
+			Assert.Equal(10.5, location.GeoLocation.X);    // longitude
+			Assert.Equal(20.5, location.GeoLocation.Y);    // latitude
+			Assert.Equal(4326, location.GeoLocation.SRID); // Проверяем SRID
+		}
+
+
+		[Fact]
         public void Should_Map_Message_To_MessageDto()
         {
             var now = DateTime.UtcNow;

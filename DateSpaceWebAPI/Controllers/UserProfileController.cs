@@ -73,6 +73,8 @@ namespace DateSpaceWebAPI.Controllers
 		{
 			var userId = User.FindFirst(ClaimTypes.NameIdentifier);
 
+			ArgumentNullException.ThrowIfNull(userId);
+
 			var success = await _userService.ChangePasswordAsync(userId.Value, dto.OldPassword, dto.NewPassword);
 
 			if (!success)

@@ -31,8 +31,9 @@ namespace DataAccessLayer
 				.AddCustomDbContext(connectionString)
                 .AddScoped<IUnitOfWork, UnitOfWork>()
 				.AddScoped<IUserRepository, UserRepository>()
+                .AddScoped<IRecommendationRepository, RecommendationRepository>(),
 				.AddScoped<ISwipeRepository, SwipeRepository>();
-		}
+        }
 	
 		private static IServiceCollection AddCustomDbContext(this IServiceCollection services, string? connectionString)
 		{

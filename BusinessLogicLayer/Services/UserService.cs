@@ -7,14 +7,14 @@ namespace BusinessLogicLayer.Services
 {
 	public class UserService : IUserService
 	{
-		private readonly IUserRepository _userRepository;
+        private readonly IUserRepository _userRepository;
 
-		public UserService(IUserRepository userRepository)
-		{
-			_userRepository = userRepository;
-		}
+        public UserService(IUserRepository userRepository)
+        {
+            _userRepository = userRepository;
+        }
 
-		public async Task<AppUser?> AuthenticateUserAsync(string username, string password)
+        public async Task<AppUser?> AuthenticateUserAsync(string username, string password)
 		{
 			var user = await _userRepository.FindByNameAsync(username);
 			if (user != null && await _userRepository.CheckPasswordAsync(user, password))
@@ -30,6 +30,7 @@ namespace BusinessLogicLayer.Services
 			user.RefreshTokenExpiryTime = expiryTime;
 			await _userRepository.UpdateUserAsync(user);
 		}
+
 		public async Task<AppUser?> GetUserByNameAsync(string username)
 		{
 			return await _userRepository.FindByNameAsync(username);
@@ -38,6 +39,7 @@ namespace BusinessLogicLayer.Services
 		{
 			return await _userRepository.CreateUserAsync(user,password);
 		}
+
 		public async Task<AppUser?> GetUserByRefreshTokenAsync(string refreshToken)
 		{
 			return await _userRepository.GetUserByRefreshTokenAsync(refreshToken);
@@ -63,10 +65,12 @@ namespace BusinessLogicLayer.Services
 			await _userRepository.UpdateUserAsync(user);
 			return true;
 		}
+
 		public async Task<AppUser?> GetUserByIdAsync(string id)
 		{
 			return await _userRepository.FindByIdAsync(id);
 		}
+
 		public async Task<bool> ChangePasswordAsync(string userId, string oldPassword, string newPassword)
 		{
 			var user = await _userRepository.FindByIdAsync(userId);
@@ -76,5 +80,5 @@ namespace BusinessLogicLayer.Services
 			var result = await _userRepository.ChangePasswordAsync(user, oldPassword, newPassword);
 			return result.Succeeded;
 		}
-	}
+    }
 }
