@@ -12,7 +12,7 @@ namespace Shared.Validators
 				.MinimumLength(3).WithMessage("Username must be at least 3 characters long.");
 
 			RuleFor(x => x.Age)
-				.GreaterThan(0).WithMessage("Age must be a positive number.")
+				.GreaterThan(18).WithMessage("Age must be a positive number.")
 				.LessThanOrEqualTo(120).WithMessage("Age must be realistic.");
 
 			RuleFor(x => x.Gender)

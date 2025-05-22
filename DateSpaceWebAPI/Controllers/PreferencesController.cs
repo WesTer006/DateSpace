@@ -23,8 +23,8 @@ namespace DateSpaceWebAPI.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<PreferenceDto>> GetPreferences()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (userId == null)
+			var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+			if (userId == null)
                 return Unauthorized();
 
             var preferences = await _preferenceService.GetPreferencesAsync(userId);
@@ -35,8 +35,8 @@ namespace DateSpaceWebAPI.Controllers
         [ProducesResponseType(typeof(PreferenceDto), 201)]
         public async Task<ActionResult<PreferenceDto>> AddPreferences([FromBody] PreferenceDto preferenceDto)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (userId == null)
+			var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+			if (userId == null)
                 return Unauthorized();
 
             var preferences = await _preferenceService.AddPreferencesAsync(userId, preferenceDto);
@@ -48,8 +48,8 @@ namespace DateSpaceWebAPI.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<PreferenceDto>> UpdatePreferences([FromBody] PreferenceDto preferenceDto)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (userId == null)
+			var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+			if (userId == null)
                 return Unauthorized();
 
             var preferences = await _preferenceService.UpdatePreferencesAsync(userId, preferenceDto);
@@ -61,8 +61,8 @@ namespace DateSpaceWebAPI.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> DeletePreferences()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (userId == null)
+			var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+			if (userId == null)
                 return Unauthorized();
 
             await _preferenceService.DeletePreferencesAsync(userId);

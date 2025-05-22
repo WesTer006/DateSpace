@@ -23,9 +23,9 @@ namespace BusinessLogicLayer.Services
 		{
 			var authClaims = new List<Claim>
 		{
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Name, user.UserName),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+			new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+			new Claim(ClaimTypes.Name, user.UserName),
+			new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
 		};
 
 			var authSigningKey = new SymmetricSecurityKey(
