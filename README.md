@@ -23,7 +23,7 @@ A prototype dating application built with **ASP.NET Core**, **Entity Framework C
 
 1. Clone the repository:
 
-   git clone https://github.com/yourusername/Datespace.git
+   git clone https://github.com/WesTer006/DateSpace/tree/dev
    cd Datespace
 
 2. Set up the database:
